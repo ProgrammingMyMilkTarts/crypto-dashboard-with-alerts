@@ -17,7 +17,8 @@ jobs:
     # and in the notification utilities. If these secrets are not added in GitHub, the job will fail.
     env:
       PYTHONPATH: .
-      DB_USER: ${{ secrets.DB_USER }}
+      DATABASE_URL: ${{secrets.DATABASE_URL}}
+      #DB_USER: ${{ secrets.DB_USER }}
       #DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       #DB_HOST: ${{ secrets.DB_HOST }}
       #DB_PORT: ${{ secrets.DB_PORT }}
