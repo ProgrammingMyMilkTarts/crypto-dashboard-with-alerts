@@ -16,7 +16,8 @@ def get_db_engine():
     # 1. Check if a single full DATABASE_URL is provided 
     database_url = os.getenv('DATABASE_URL')
     if database_url:
-        return create_engine(database_url)
+        engine = create_engine(database_url)
+        return engine
 
     #2 if not go back to local
     # Grab secrets securely from environment variables
