@@ -15,7 +15,21 @@ jobs:
 
     # These environment variables match what the backend code is reading in core/database.py
     # and in the notification utilities. If these secrets are not added in GitHub, the job will fail.
-  
+    env:
+      PYTHONPATH: .
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+      TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+      TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
 
     steps:
       - name: Checkout repository
@@ -27,25 +41,19 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        # Use the scheduler-specific requirements file so the ETL job does not pull in
-        # Streamlit or other app dependencies that can conflict in CI.
+        # The requirements file is at the repo root, not under backend/.
         run: |
           python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt python-dotenv
-
-      - name: Create .env file from repository
-        run: |
-          cp backend/.env .env || true
-
+          python -m pip install -r requirements.txt
 
       - name: Run Crypto Fetcher (ETL)
         # Running from backend/src makes the module imports cleaner for etl.crypto_fetcher.
         working-directory: backend/src
         run: |
-          python -m backend.src.etl.crypto_fetcher
+          python -m etl.crypto_fetcher
 
       - name: Run Price Checker & Notifier
         # This job reads the same DB and notification secrets used by the app itself.
         working-directory: backend/src
         run: |
-          python -m backend.src.etl.price_checker
+          python -m etl.price_checker
