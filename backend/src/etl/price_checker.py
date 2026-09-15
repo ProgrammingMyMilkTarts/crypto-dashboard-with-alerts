@@ -2,12 +2,20 @@
 
 import logging
 from datetime import datetime, timezone
-from ..core.database import get_active_alerts,get_latest_prices,update_last_notified,deactivate_alert
+from ..core.database import get_active_alerts,get_latest_prices,update_last_notified,deactivate_alert,get_db_engine
+from ..models import Base
+
 
 logging.basicConfig(level=logging.INFO, format = '%(asctime)s - %(levelname)s - %(message)s')
 
+def init_db():
+    engine = get_db_engine()
+    Base.metadata.create_all(bind=engine)
+
 def check_price_alerts():
     logging.info("Starting price alert evaluation scan...")
+
+    init_db()
 
     # 1. Fetch active alerts from database
     active_alerts = get_active_alerts()
