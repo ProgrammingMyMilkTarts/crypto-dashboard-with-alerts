@@ -13,6 +13,12 @@ load_dotenv(override = True)
 
 #databae connection
 def get_db_engine():
+    # 1. Check if a single full DATABASE_URL is provided 
+    database_url = os.getenv('DATABASE_URL')
+    if database_url:
+        return create_engine(database_url)
+
+    #2 if not go back to local
     # Grab secrets securely from environment variables
     user = os.getenv('DB_USER')
     password = os.getenv('DB_PASSWORD')
