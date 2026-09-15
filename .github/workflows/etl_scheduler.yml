@@ -47,10 +47,10 @@ jobs:
         # Running from backend/src makes the module imports cleaner for etl.crypto_fetcher.
         working-directory: backend/src
         run: |
-          python -m etl.crypto_fetcher
+          python -m backend.src.etl.crypto_fetcher
 
       - name: Run Price Checker & Notifier
         # This job reads the same DB and notification secrets used by the app itself.
         working-directory: backend/src
         run: |
-          python -m etl.price_checker
+          python -m backend.src.etl.price_checker
