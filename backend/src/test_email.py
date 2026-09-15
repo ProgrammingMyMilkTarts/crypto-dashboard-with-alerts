@@ -3,7 +3,7 @@
 
 import os
 from dotenv import load_dotenv
-from .utils.notification import send_email, send_notification
+from .utils.notifications import send_email, send_notification
 
 load_dotenv(override=True)
 
