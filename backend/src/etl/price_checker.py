@@ -3,7 +3,8 @@
 import logging
 from datetime import datetime, timezone
 from ..core.database import get_active_alerts,get_latest_prices,update_last_notified,deactivate_alert,get_db_engine,Base
-from ..models import alerts,crytpo
+from ..models import alerts
+from ..models import crypto
 
 
 logging.basicConfig(level=logging.INFO, format = '%(asctime)s - %(levelname)s - %(message)s')
