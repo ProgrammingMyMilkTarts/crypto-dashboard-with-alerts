@@ -1,0 +1,13 @@
+# Scheduler-only dependencies for the GitHub Actions ETL workflow.
+# These are the packages needed to run the crypto fetcher and price alert checker.
+
+fastapi==0.115.0
+uvicorn==0.30.6
+sqlalchemy==2.0.35
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
+yfinance==0.2.50
+twilio==9.3.0
+pandas==2.2.3
+pydantic==2.9.2
+email-validator==2.2.0
