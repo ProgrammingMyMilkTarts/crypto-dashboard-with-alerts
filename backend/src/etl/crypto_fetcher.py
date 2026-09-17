@@ -11,8 +11,8 @@ import os
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
 # Keep it focused on major cryptos
-TARGET_TICKERS = ["BTC-USD", "ETH-USD", "SOL-USD"]
-
+TARGET_TICKERS = ["BTC-USD"]
+#, "ETH-USD", "SOL-USD"
 
 def run_crypto_fetcher():
     logging.info("Starting Bitcoin ETl")
