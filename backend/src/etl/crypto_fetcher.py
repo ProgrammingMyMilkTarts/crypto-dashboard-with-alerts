@@ -3,6 +3,7 @@ import logging
 import random
 import time
 import pandas as pd
+import requests
 import yfinance as yf
 from ..core.database import get_db_engine,save_crypto_price
 import os
@@ -22,8 +23,11 @@ def run_crypto_fetcher():
         try:
             time.sleep(random.uniform(1.0,5.0))
 
+            session = requests.Session()
+            session.headers["User-Agent"] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+
             print(f"Fetching data for {symbol}")
-            ticker = yf.Ticker(symbol)
+            ticker = yf.Ticker(symbol,session=session)
 
             df = ticker.history(period = "2d")
 
