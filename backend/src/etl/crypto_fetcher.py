@@ -96,7 +96,8 @@ def fetch_and_store_prices():
                 new_record = CryptoPrice(
                     symbol=symbol,
                     price=price,
-                    timestamp= datetime())
+                    timestamp= datetime.now()
+                )
                 
                 session.add(new_record)
                 # Save to database using your SQLAlchemy session / models
