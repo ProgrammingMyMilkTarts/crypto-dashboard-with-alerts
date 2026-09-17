@@ -9,6 +9,8 @@ from ..core.database import get_db_engine,save_crypto_price
 from ..models.crypto import CryptoPrice  # Adjust to your crypto model import
 import os
 from datetime import datetime, timezone
+from sqlalchemy.orm import sessionmaker
+
 
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
@@ -66,7 +68,12 @@ def fetch_and_store_prices():
     # CoinGecko free API mapping for your symbols
     # IDs correspond to CoinGecko's asset identifiers
     url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd"
-    
+
+    engine = get_db_engine(bind=engine)
+    #make session
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -79,17 +86,20 @@ def fetch_and_store_prices():
             'SOL-USD': data.get('solana', {}).get('usd')
         }
         
-        engine = get_db_engine()
         
         # Insert records into your database (example logic)
         # Your existing database insertion loop goes here using price_map...
         for symbol, price in price_map.items():
             if price is not None:
                 logging.info(f"Fetched {symbol}: ${price}")
+
+                new_record = CryptoPrice(symbol=symbol,price=price)
+                session.add(new_record)
                 # Save to database using your SQLAlchemy session / models
             else:
                 logging.warning(f"No price returned for {symbol}")
-                
+        session.commit()
+        logging.info("Success comit crypto price")   
     except Exception as e:
         logging.error(f"Failed to fetch prices from CoinGecko: {e}")
 
