@@ -6,7 +6,7 @@ import pandas as pd
 import requests
 import yfinance as yf
 from ..core.database import get_db_engine,save_crypto_price
-from ..models.crypto import Crypto  # Adjust to your crypto model import
+from ..models.crypto import CryptoPrice  # Adjust to your crypto model import
 import os
 from datetime import datetime, timezone
 
