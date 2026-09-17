@@ -69,7 +69,7 @@ def fetch_and_store_prices():
     # IDs correspond to CoinGecko's asset identifiers
     url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd"
 
-    engine = get_db_engine(bind=engine)
+    engine = get_db_engine()
     #make session
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -101,6 +101,7 @@ def fetch_and_store_prices():
         session.commit()
         logging.info("Success comit crypto price")   
     except Exception as e:
+        session.rollback()
         logging.error(f"Failed to fetch prices from CoinGecko: {e}")
 
 
