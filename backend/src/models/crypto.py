@@ -16,7 +16,7 @@
      Pydantic will automatically extract the attributes
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 from datetime import datetime
 from typing import Optional
 
@@ -25,7 +25,7 @@ class CryptoPrice(BaseModel):
     price: float
     change_24h: Optional[float] = None
     volume: Optional[float] = None
-    timestamp: datetime
+    timestamp: datetime = Field(default_factory=datetime.now)
 
     class config:
         # This allows Pydantic to accept SQLAlchemy model objects
