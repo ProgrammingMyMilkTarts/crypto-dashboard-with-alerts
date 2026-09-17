@@ -47,8 +47,8 @@ class CryptoPrice(Base):
     id=Column(Integer,primary_key=True,index=True)
     symbol = Column(String(20),nullable=False,index=True)
     price = Column(Float,nullable=False)
-    change_24h = Column(Float,nullable=False)
-    volume = Column(Float,nullable=False)
+    change_24h = Column(Float,nullable=True)
+    volume = Column(Float,nullable=True)
     timestamp = Column(DateTime,server_default=func.now(),index=True)
 
     def to_dict(self):
@@ -58,7 +58,7 @@ class CryptoPrice(Base):
         "price": self.price,
         "change_24h": self.change_24h,
         "volume": self.volume,
-        "timstamp": self.timestamp.isoformat() if self.timestamp else None
+        "timestamp": self.timestamp.isoformat() if self.timestamp else None
         }
 
 ##Alerts
