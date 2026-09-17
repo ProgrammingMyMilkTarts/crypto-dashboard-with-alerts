@@ -82,8 +82,8 @@ def fetch_and_store_prices():
         # Map API response back to your database symbols
         price_map = {
             'BTC-USD': data.get('bitcoin', {}).get('usd'),
-            'ETH-USD': data.get('ethereum', {}).get('usd'),
-            'SOL-USD': data.get('solana', {}).get('usd')
+            #'ETH-USD': data.get('ethereum', {}).get('usd'),
+            #'SOL-USD': data.get('solana', {}).get('usd')
         }
         
         # Insert records into your database (example logic)
