@@ -86,14 +86,18 @@ def fetch_and_store_prices():
             'SOL-USD': data.get('solana', {}).get('usd')
         }
         
-        
         # Insert records into your database (example logic)
         # Your existing database insertion loop goes here using price_map...
         for symbol, price in price_map.items():
             if price is not None:
                 logging.info(f"Fetched {symbol}: ${price}")
 
-                new_record = CryptoPrice(symbol=symbol,price=price)
+                #new record
+                new_record = CryptoPrice(
+                    symbol=symbol,
+                    price=price,
+                    timestamp= datetime())
+                
                 session.add(new_record)
                 # Save to database using your SQLAlchemy session / models
             else:
